@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Мой калькулятор</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #00000c;
+            font-family: Arial, sans-serif;
+        }
+        .calculator {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,5);
+        }
+        #screen {
+            width: 370px;
+            height: 60px;
+            font-size: 40px;
+            text-align: right;
+            padding: 5px;
+            margin-bottom: 10px;
+            background: #000;
+            color: rgb(0, 170, 0);
+            border: none;
+            border-radius: 5px;
+        }
+        .btn {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            font-size: 30px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+}        
+        .btnravno {
+            width: 115px;
+            height: 50px;
+            margin: 5px;
+            font-size: 30px;
+            background: #ff7503;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btnnul {
+            width: 115px;
+            height: 50px;
+            margin: 5px;
+            font-size: 30px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btnbacksp {
+            width: 115px;
+            height: 50px;
+            margin: 5px;
+            font-size: 30px;
+            background: #0026fffb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }      
+
+        .btn:hover {
+            background: #666;
+        }
+        .equals {
+            background: #0a0;
+        }
+        .clear {
+            background: #a00;
+            color:#fff
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="screen" disabled>
+
+    <div>
+        <button class="btn clear" onclick="clearScreen()">C</button>
+        <button class="btnbacksp" onclick="backspace()">←</button>
+        <button class="btn" onclick="appendToScreen('/')">/</button>
+        <button class="btn" onclick="appendToScreen('**')">xʸ</button>
+        <button class="btn" onclick="appendToScreen('(')">(</button>
+    </div>
+    <div>
+        <button class="btn" onclick="appendToScreen('7')">7</button>
+        <button class="btn" onclick="appendToScreen('8')">8</button>
+        <button class="btn" onclick="appendToScreen('9')">9</button>
+        <button class="btn" onclick="appendToScreen('*')">*</button>
+        <button class="btn" onclick="sqrtScreen()">√</button>
+        <button class="btn" onclick="appendToScreen(')')">)</button>
+    </div>
+    <div>
+        <button class="btn" onclick="appendToScreen('4')">4</button>
+        <button class="btn" onclick="appendToScreen('5')">5</button>
+        <button class="btn" onclick="appendToScreen('6')">6</button>
+        <button class="btn" onclick="appendToScreen('-')">-</button>
+        <button class="btn" onclick="appendPi()">π</button>
+        <button class="btn" onclick="percent()">%</button>
+    </div>
+    <div>
+        <button class="btn" onclick="appendToScreen('1')">1</button>
+        <button class="btn" onclick="appendToScreen('2')">2</button>
+        <button class="btn" onclick="appendToScreen('3')">3</button>
+        <button class="btn" onclick="appendToScreen('+')">+</button>
+        <button class="btn" onclick="appendE()">e</button>
+        
+    </div>
+    <div>
+        <button class="btnnul" onclick="appendToScreen('0')">0</button>
+        <button class="btn" onclick="appendToScreen('.')">.</button>        
+        <button class="btnravno" style="height:50px;" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+  
+  
+
+   function percent() {
+    let current = document.getElementById("screen").value;
+    // Проверяем, что там число
+    if (current === "") return;
+
+    // Преобразуем в число
+    let num = parseFloat(current);
+    if (isNaN(num)) {
+        document.getElementById("screen").value = "Ошибка";
+        return;
+    }
+
+    // Делим на 100
+    let result = num / 100;
+    document.getElementById("screen").value = result;
+}
+
+   function appendPi() {
+    document.getElementById("screen").value += Math.PI;
+}
+
+function appendE() {
+    document.getElementById("screen").value += Math.E;
+}
+
+   function backspace() {
+    let current = document.getElementById("screen").value;
+    // Удаляем последний символ
+    document.getElementById("screen").value = current.slice(0, -1);
+}
+     
+   function sqrtScreen() {
+    let current = document.getElementById("screen").value;
+    // Проверяем, что там число
+    let num = parseFloat(current);
+    if (isNaN(num) || num < 0) {
+        document.getElementById("screen").value = "Ошибка";
+    } else {
+        let result = Math.sqrt(num);
+        document.getElementById("screen").value = result;
+    }
+}
+
+    function appendToScreen(value) {
+        document.getElementById("screen").value += value;
+    }
+
+    function clearScreen() {
+        document.getElementById("screen").value = "";
+    }
+
+    function calculate() {
+        let expression = document.getElementById("screen").value;
+        try {
+            let result = eval(expression);
+            document.getElementById("screen").value = result;
+        } catch (error) {
+            document.getElementById("screen").value = "Ошибка";
+        }
+    }
+</script>
+
+</body>
+</html>
